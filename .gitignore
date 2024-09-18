@@ -1,4 +1,5 @@
 *
+!.gitignore
 !.vimrc
 !.zshrc
-!/Library/Application Support/nushell
+
