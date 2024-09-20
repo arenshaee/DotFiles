@@ -44,6 +44,11 @@ let g:nord_italic = 1
 colorscheme nord
 if has('gui_running')
 	highlight Normal guibg=black
+    "set guifont=Fixedsys 
+    set guifont=Cousine\ Nerd\ Font:h16
+	set noanti
+else
+	set go+=a
 endif
 
 set cursorline
@@ -178,15 +183,3 @@ endfunction
 
 " Automatically delete swap files when closing a buffer
 autocmd BufUnload * if filereadable(expand('%')) && !&modifiable | call delete(expand('%:p') . '.sw?') | endif
-
-
-if has('gui_running')
-    " set guifont=IBM\ Plex\ Mono:h14, Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
-    "set guifont=Fixedsys 
-    set guifont=Cousine\ Nerd\ Font:h16
-	set noanti
-	"set guifont=JetBrains\ Mono:h14
-else
-	set go+=a
-endif
-
