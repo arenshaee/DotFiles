@@ -13,10 +13,11 @@ call plug#begin('~/.vim/plugged')
 	Plug 'preservim/vim-markdown'
 	Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
-	Plug 'dense-analysis/ale'
+	"Plug 'dense-analysis/oule'
 
 	" Languages & Frameworks
 	Plug 'rust-lang/rust.vim'
+	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
@@ -45,8 +46,9 @@ colorscheme nord
 if has('gui_running')
 	highlight Normal guibg=black
     "set guifont=Fixedsys 
-    set guifont=Cousine\ Nerd\ Font:h16
-	set noanti
+    "set guifont=Cousine\ Nerd\ Font:h16
+    set guifont=Monaco\ Nerd\ Font\ Mono:h16
+    "set guifont=Monaco:h16
 else
 	set go+=a
 endif
@@ -54,16 +56,10 @@ endif
 set cursorline
 
 syntax on
+syntax enable
 set number
 set relativenumber
 set noshowmode
-
-set noexpandtab
-set tabstop=4
-set shiftwidth=4
-set autoindent
-set smartindent
-filetype plugin indent on
 
 set showmatch
 
@@ -79,8 +75,9 @@ set mouse=a
 set encoding=utf-8
 set nocompatible
 
-set clipboard+=unnamed
 set paste
+set clipboard+=unnamed
+xnoremap p pgvy
 
 set nofoldenable
 set nowrap
@@ -121,6 +118,8 @@ vmap L $
 " Easier save and quit
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
+
+nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
@@ -176,10 +175,24 @@ let g:airline_symbols.linenr = ''
 " Autopairs
 let g:auto_pairs_map_keys = 1
 
-" Define a function to source .vimrc
-function! ReloadVimrc()
-    source ~/.vimrc
-endfunction
-
 " Automatically delete swap files when closing a buffer
 autocmd BufUnload * if filereadable(expand('%')) && !&modifiable | call delete(expand('%:p') . '.sw?') | endif
+
+" Go configs
+let g:go_updatetime = 100
+let g:go_fmt_autosave = 0
+let g:go_imports_autosave = 0
+
+filetype on
+filetype plugin on
+filetype indent on
+set noexpandtab
+set tabstop=4
+set shiftwidth=4
+set smarttab
+"set cindent
+"set smartindent
+"set autoindent
+
+set timeoutlen=1000
+set ttimeoutlen=50

@@ -6,6 +6,8 @@ path+=("$HOME/Library/Android/sdk/platform-tools")
 path+=("$HOME/bin")
 export ZSH="$HOME/.oh-my-zsh"
 export TERM=xterm-256color
+export JAVA_HOME="/Users/ahmadreza/Library/Java/JavaVirtualMachines/jdk-21.0.5.jdk/Contents/Home"
+export GRADLE_USER_HOME="$HOME/.gradle"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -116,4 +118,21 @@ if type brew &>/dev/null; then
     autoload -Uz compinit
     compinit
   fi
+
+KEYTIMEOUT=1
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 

@@ -14,14 +14,21 @@ def create_left_prompt [] {
     let path_segment = $"($path_color)($dir)(ansi reset)"
 
 	use std
-    let git_current_ref = $"(git rev-parse --abbrev-ref HEAD e> (std null-device))"
-	let git_current_root = $"(git rev-parse --show-toplevel)"
-    let git_segment = if ($git_current_ref != "" and $git_current_root != "/Users/ahmadreza") {
-        $"(ansi reset) | (ansi yellow)($git_current_ref)" 
-    }
+	mut git_segment = ""
+	if ($env.PWD == "/Users/ahmadreza") {
+		let git_current_ref = $"(git rev-parse --abbrev-ref HEAD e> (std null-device))"
+		let git_current_root = $"(git rev-parse --show-toplevel)"
+		$git_segment = if ($git_current_ref != "" and git_current_root != "/Users/ahmadreza") {
+			$"(ansi reset) | (ansi yellow)($git_current_ref)" 
+		}
+	}
 
     let temp_path_segment = $path_segment | str replace --all (char path_sep) $"($separator_color)(char path_sep)($path_color)"
-	let prompt = $"($temp_path_segment)($git_segment)"
+	let prompt = if ($git_segment == "") {
+		$"($temp_path_segment)"
+	} else {
+		$"($temp_path_segment)($git_segment)"
+	}
 	$prompt
 }
 
@@ -105,6 +112,11 @@ $env.NU_PLUGIN_DIRS = [
 # path add ($env.CARGO_HOME | path join "bin")
 # path add ($env.HOME | path join ".local" "bin")
 # $env.PATH = ($env.PATH | uniq)
-
+$env.PATH = ($env.PATH 
+| split row (char esep) 
+| prepend '/opt/homebrew/bin'
+| prepend ($env.HOME | '/Library/Android/sdk/platform-tools')
+| prepend ($env.HOME | '/bin')
+)
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')

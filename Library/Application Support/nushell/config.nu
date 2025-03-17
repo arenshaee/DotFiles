@@ -891,3 +891,9 @@ $env.config = {
         }
     ]
 }
+$env.PATH = ($env.PATH 
+| split row (char esep) 
+| append "/opt/homebrew/bin"
+| append "/users/ahmadreza/Library/Android/sdk/platform-tools"
+| append "/users/ahmadreza/.cargo/bin"
+)
